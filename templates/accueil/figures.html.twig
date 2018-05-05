@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+<!-- Texte d'accroche ====================================================-->
+<div class="row">
+  <div class="col-lg-12 encart_titre  page-header">
+  
+  <h2 class="title">Snowtricks, le site du surf</h2>
+      
+      
+      
+      
+    
+    <a href="#" id="loadMore">
+        
+        <span class="glyphicon glyphicon-arrow-down"></span>
+    </a>
+      
+  </div>
+</div>
+
+
+
+
+<!-- messages flash ====================================================-->  
+
+
+
+<!-- Encarts figures ====================================================-->  
+<div class="figure_min_conteneur" id="figure_min_conteneur">
+{% for figure in figures %}
+    
+<div class="figure_min w3-animate-opacity" id="figure_min" style="display:none;">
+    
+    
+    {% for image in figure.images %}
+        {% if image.isMasterImage %}
+        <div class="figure_min_content">
+            <img class="thumbnail_figure_image" src="/uploads/images/{{ image.link }}" alt="Symfony!"  />
+        </div>
+        {% endif %}
+    {% endfor %}    
+
+	
+	<div class="figure_min_content" id="figure_min_text_conteneur">
+        <p><a href="/figure/{{ figure.id }}">{{ figure.name }}</a></p>
+        
+        
+		
+        {% if app.session.get('sessionId') %}
+        <a href="http://127.0.0.1:8000/modifyfigure/{{ figure.id }}">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+        
+    
+        <a href="http://127.0.0.1:8000/deletefigure/{{ figure.id }}">
+            <span class="glyphicon glyphicon-trash"></span>
+        </a>
+        {% endif %}
+        
+        
+    </div>
+ </div>   
+{% endfor %}    
+</div> 
+
+
+<script>
+    
+    var showNumber = 0;
+    var step = 5;
+    var figures = document.getElementsByClassName("figure_min");
+    {% if numberFigures is defined %}
+        var numberFigures = {{ numberFigures }};
+    {% endif %} 
+    
+    
+    
+    window.addEventListener('scroll', function ( event ) {
+        
+        var total = document.body.scrollTop + window.innerHeight;
+        
+        
+        
+        if(total >= document.body.scrollHeight && showNumber < numberFigures ){
+            showNumber += step;
+            var start = (showNumber-step)>=0 ? showNumber-step : 0
+            if( showNumber > numberFigures ){ showNumber = figures.length }
+            
+            for (var i = start ; i < showNumber ; i++) {
+                figures[i].style.display = "block";
+            }
+            
+            
+            for (var opacity = 0; opacity < 1; opacity += 0.00001) {
+                for (var i = showNumber-step; i < showNumber; i++) {
+                    figures[i].style.opacity = opacity;
+                }
+                
+            }
+            
+        }
+        
+    }, false);
+
+</script>
+
+
+
+
+
+{% endblock %}    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+<!-- Texte d'accroche ====================================================-->
+<div class="row">
+  <div class="col-lg-12 encart_titre  page-header">
+  
+{% if name_of_connected is defined %}
+      {{ app.session.get('name') }}
+      <h2 class="title">bienvenue {{ name_of_connected }}</h2>
+{% elseif unknown %}
+    <h2 class="title">Cet identifiant et mot de passe sont inconnus</h2>
+{% endif %}
+      
+      {{ app.session.get('sessionId') }}
+      
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Snowtricks - création d'une figure{% endblock %}
+
+
+{% block body %}
+<h3>création d'une figure</h3>
+
+
+{% if app.session.get('sessionId') %}
+ <div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {# Les erreurs générales du formulaire. #}
+  {{ form_errors(form) }}
+
+
+    
+    
+    {# Nom de la figure #}
+  <div class="form-group">
+    {{ form_label(form.name, "Nom de la figure", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.name) }}
+
+    <div class="col-sm-10">
+      {# Génération de l'input. #}
+      {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  
+    
+    
+    
+    {# description de la figure #}
+  <div class="form-group">
+    {{ form_label(form.description, "Description de la figure", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.description) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+    
+    
+     
+      
+     
+     
+      
+     {# image de la figure #}
+  <div class="form-group">
+    {{ form_label(form.uploadedFiles, "image de la figure", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.uploadedFiles) }}
+    <div class="col-sm-10">
+      {{ form_widget(form.uploadedFiles) }}
+     </div>
+  </div>
+     
+     
+     
+     
+     
+    {{ form_end(form) }}
+</div>       
+{% else %}
+    <div class="col-lg-12 encart">
+        <p>Connectez-vous pour pouvoir créer une figure.</p>
+    </div>	
+{% endif %}
+
+
+
+
+{% endblock %}
+
+
+

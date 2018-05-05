@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+<div class="col-lg-12 encart">
+	
+	<h2>{{ figure.name }}</h2> <p>created on {{ figure.createdAt|date("m/d/Y") }} at {{ figure.createdAt|date("h:m:s") }}</p>
+    
+    
+    <p>Difficulté : {{ figure.difficulty }}</p>
+	
+	<div class="encart">
+        <h3>image principale :</h3>
+	{% for image in figure.images %}
+        {% if image.isMasterImage %}
+        
+            <img class="thumbnail_figure_image" src="/uploads/images/{{ image.link }}" alt="Symfony!"  />
+        
+        {% endif %}
+    {% endfor %} 
+    </div>
+    
+    
+    <div class="encart" >
+    <h3>images secondaires :</h3>
+    {% for image in figure.images %}
+        {% if not image.isMasterImage %}
+        <div class="encart">
+            <img class="thumbnail_figure_image" src="/uploads/images/{{ image.link }}" alt="Symfony!"  />
+            <p><a class="btn btn-primary" href="http://127.0.0.1:8000/setMaster/{{ figure.id }}/{{ image.id }}">Rendre principale</a></p>
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+	<br>
+	
+	
+    <div class="encart">
+    <h3>Description :</h3>
+    {{figure.description}}
+	</div>
+    
+    
+    
+	{% if app.session.get('sessionId') %}
+    <p><a class="btn btn-primary" href="http://127.0.0.1:8000/modifyfigure/{{ figure.id }}">Modifier</a></p>
+    {% endif %}
+</div>	
+	
+
+{% if app.session.get('sessionId') %}
+ <div class="col-lg-12 encart">
+<div class="well">
+  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+  {{ form_errors(form) }}
+
+  <div class="form-group">
+    {{ form_label(form.contenu, "Ecrivez votre commentaire " ~ app.session.get('name'), {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+    {{ form_errors(form.contenu) }}
+
+    <div class="col-sm-10">
+      {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+    </div>
+  </div>
+
+  {{ form_end(form) }}
+</div>
+</div>       
+{% else %}
+    <div class="col-lg-12 encart">
+        <p>Connectez-vous pour pouvoir poster un commentaire.</p>
+    </div>	
+{% endif %}
+
+
+	
+{% for message in messages %}
+	<div class="col-lg-12 encart">
+        <p>publié le : {{ message.dateCreation|date("m/d/Y") }} par {{ message.author }}</p>
+        {{ message.contenu }}
+    </div>	
+{% endfor %}	
+	
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
